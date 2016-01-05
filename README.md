@@ -33,6 +33,10 @@ To start the lab, issue::
     cd vagrant
     vagrant up
 
+You can now login to the tester instance::
+
+    vagrant ssh tester-kali
+
 ## Credit
 
 ## Kali 2 `virtual-lab/packer/kali`
