@@ -15,6 +15,7 @@ Build using [packer](https://packer.io)::
 
     {cd packer/kali; packer build kali-2-amd64.json; cd ../..}
     {cd packer/metasploitable; packer build metasploitable2.json; cd ../..}
+    {cd packer/debian-lenny; packer build debian-lenny-5.0.10-amd64-netinst.json; cd ../..}
 
 This will produce two files
 
@@ -23,8 +24,9 @@ This will produce two files
 
 We then have to import those into [Vagrant](https://www.vagrantup.com). Note that we’re using those names in our `Vagrantfile`::
 
-    {cd packer/kali; vagrant box add --name kali      kali-2-amd64_virtualbox.box; cd ../..}
+    {cd packer/kali; vagrant box add --name kali      kali-2-amd64-virtualbox.box; cd ../..}
     {cd packer/metasploitable; vagrant box add --name metasploitable2 metasploitable2-virtualbox.box; cd ../..}
+    {cd packer/debian-lenny; vagrant box add --name debian-lenny debian-lenny-5.0.10-amd64-virtualbox.box; cd ../..}
 
 ## Running this lab
 
@@ -39,13 +41,17 @@ You can now login to the tester instance::
 
 ## Credit
 
-## Kali 2 `virtual-lab/packer/kali`
+## Kali 2 `packer/kali`
 
 This is [Kali 2.0](https://www.kali.org/) (`kali-linux-full`) with all X11, GUI and LaTeX stuff stripped to save space. Kali would not accept my `preseed.cfg` so we start from [Debian 8](https://www.debian.org/News/2015/20150426) on which Kali is built and upgrade to Kali from there. Debian 8 installer based on [pjkundert/cpppo](https://github.com/pjkundert/cpppo/tree/master/packer/debian-8-amd64).
 
-## Metasploitable  `virtual-lab/packer/metasploitable`
+## Metasploitable  `packer/metasploitable`
 
 This is [Metasploitable 2](http://r-7.co/Metasploitable2) based on [waratek/vagrant-boxes](https://github.com/waratek/vagrant-boxes.git).
+
+## Debian Lenny `packer/debian-lenny` ##
+
+Debian 5.0.10 based on [lxhunter/packer-templates](https://github.com/lxhunter/packer-templates/tree/master/templates/debian).
 
 ## Contributing
 

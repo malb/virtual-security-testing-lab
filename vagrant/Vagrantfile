@@ -9,7 +9,8 @@ Vagrant.configure(2) do |config|
       v.customize ['modifyvm', :id, '--name', 'tester-kali']
     end
 
-    tester.vm.network :private_network, ip: '10.13.37.2'
+    tester.vm.network :private_network, ip: '10.13.37.2',
+                      virtualbox__intnet: "virtual-security-testing-network"
   end
 
   config.vm.define "target-metasploitable2" do |target|
@@ -19,6 +20,18 @@ Vagrant.configure(2) do |config|
       v.customize ['modifyvm', :id, '--name', 'target-metasploitable2']
     end
 
-    target.vm.network :private_network, ip: '10.13.37.10'
+    target.vm.network :private_network, ip: '10.13.37.10',
+                      virtualbox__intnet: "virtual-security-testing-network"
+  end
+
+  config.vm.define "target-debian-lenny" do |target|
+    target.vm.box = "debian-lenny"
+
+    target.vm.provider 'virtualbox' do |v|
+      v.customize ['modifyvm', :id, '--name', 'target-debian-lenny']
+    end
+
+    target.vm.network :private_network, ip: '10.13.37.20',
+                      virtualbox__intnet: "virtual-security-testing-network"
   end
 end

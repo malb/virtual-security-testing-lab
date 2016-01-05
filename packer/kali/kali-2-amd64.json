@@ -42,7 +42,7 @@
     ],
     "post-processors": [
         {
-            "output": "kali-2-amd64_virtualbox.box",
+            "output": "kali-2-amd64-virtualbox.box",
             "type": "vagrant",
             "only": ["virtualbox-iso"]
         }
