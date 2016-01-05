@@ -1,0 +1,43 @@
+{
+  "variables": {
+    "vm_name": "metasploitable2",
+    "box_desc" : "Metasploitable2"
+  },
+  "description": "{{user `box_desc`}}",
+  "builders": [
+    {
+      "headless": "false",
+      "type": "virtualbox-ovf",
+      "source_path": "Metasploitable2.ovf",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{user `vm_name`}}",
+      "boot_wait": "10s",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "shutdown_command": "echo 'msfadmin' | sudo -S /sbin/shutdown -hP 0",
+      "ssh_password": "msfadmin",
+      "ssh_port": 22,
+      "ssh_username": "msfadmin",
+      "ssh_wait_timeout": "10000s"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'msfadmin' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+      "scripts": [
+        "scripts/base.sh",
+        "scripts/vagrant.sh",
+        "scripts/virtualbox.sh",
+        "scripts/cleanup.sh",
+        "scripts/zerodisk.sh"
+      ],
+      "pause_before": "10s"
+    }
+  ],
+  "post-processors": [  {
+    "type": "vagrant",
+    "output" : "{{user `vm_name`}}-{{.Provider}}.box",
+    "keep_input_artifact": false
+  }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+    "builders": [
+        {
+            "boot_command": [
+                "<esc><wait>",
+                "install <wait>",
+                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kali-2-preseed.cfg <wait>",
+                "debian-installer=en_GB <wait>",
+                "auto <wait>",
+                "locale=en_GB.UTF8 <wait>",
+                "kbd-chooser/method=uk <wait>",
+                "netcfg/get_hostname={{ .Name }} <wait>",
+                "netcfg/get_domain=pentesting.lan <wait>",
+                "fb=false <wait>",
+                "debconf/frontend=noninteractive <wait>",
+                "console-setup/ask_detect=false <wait>",
+                "console-keymaps-at/keymap=uk <wait>",
+                "keyboard-configuration/xkb-keymap=uk <wait>",
+                "<enter><wait>"
+            ],
+            "boot_wait": "10s",
+            "headless": false,
+            "disk_size": 10140,
+            "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+            "guest_os_type": "Debian_64",
+            "http_directory": "http",
+            "iso_checksum": "a41801dcc0e37bce2406e18b334f99ae366d6fde",
+            "iso_checksum_type": "sha1",
+            "iso_url": "http://cdimage.debian.org/debian-cd/8.2.0/amd64/iso-cd/debian-8.2.0-amd64-netinst.iso",
+            "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -hP now",
+            "ssh_password": "vagrant",
+            "ssh_port": 22,
+            "ssh_username": "vagrant",
+            "ssh_wait_timeout": "10000s",
+            "type": "virtualbox-iso",
+            "vm_name": "kali-2-amd64",
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "1024"],
+                ["modifyvm", "{{.Name}}", "--cpus", "2"]
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "output": "kali-2-amd64_virtualbox.box",
+            "type": "vagrant",
+            "only": ["virtualbox-iso"]
+        }
+    ],
+    "provisioners": [
+        {
+            "scripts": [
+                "scripts/base.sh",
+                "scripts/virtualbox.sh",
+                "scripts/vagrant.sh",
+                "scripts/kali.sh",
+                "scripts/cleanup.sh"
+            ],
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+        }
+    ]
+}
