@@ -4,14 +4,14 @@ Simple &amp; boring virtual machines for security testing. These are offered as 
 
 ## Building this lab
 
-Check out this repository to a disk with a lot of space::
+Check out this repository to a disk with a lot of space:
 
     git clone https://github.com/malb/virtual-security-testing-lab.git
     cd virtual-security-testing-lab
 
 Download [Metasploitable 2](http://sourceforge.net/projects/metasploitable/files/Metasploitable2/metasploitable-linux-2.0.0.zip/download) from Sourceforge. Unpack the file `Metasploiable2.vmdk` into the directory `packer/metasploitable/`.
 
-Build using [packer](https://packer.io)::
+Build using [packer](https://packer.io):
 
     {cd packer/kali; packer build kali-2-amd64.json; cd ../..}
     {cd packer/metasploitable; packer build metasploitable2.json; cd ../..}
@@ -22,7 +22,7 @@ This will produce two files
 - `kali-2-amd64_virtualbox.box` our tester
 - `metasploitable2-virtualbox.box` our target
 
-We then have to import those into [Vagrant](https://www.vagrantup.com). Note that we’re using those names in our `Vagrantfile`::
+We then have to import those into [Vagrant](https://www.vagrantup.com). Note that we’re using those names in our `Vagrantfile`:
 
     {cd packer/kali; vagrant box add --name kali      kali-2-amd64-virtualbox.box; cd ../..}
     {cd packer/metasploitable; vagrant box add --name metasploitable2 metasploitable2-virtualbox.box; cd ../..}
@@ -30,12 +30,12 @@ We then have to import those into [Vagrant](https://www.vagrantup.com). Note tha
 
 ## Running this lab
 
-To start the lab, issue::
+To start the lab, issue:
 
     cd vagrant
     vagrant up
 
-You can now login to the tester instance::
+You can now login to the tester instance:
 
     vagrant ssh tester-kali
 
