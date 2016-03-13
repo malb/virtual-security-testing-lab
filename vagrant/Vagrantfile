@@ -34,4 +34,20 @@ Vagrant.configure(2) do |config|
     target.vm.network :private_network, ip: '10.13.37.20',
                       virtualbox__intnet: "virtual-security-testing-network"
   end
+
+  config.vm.define "target-dvna" do |target|
+    target.vm.box = "dvna"
+
+    target.vm.provider 'virtualbox' do |v|
+      v.customize ['modifyvm', :id, '--name', 'target-dvna']
+    end
+
+    target.vm.network :private_network, ip: '10.13.37.30',
+                      virtualbox__intnet: "virtual-security-testing-network"
+
+    target.vm.provision "shell", run: "always" do |s|
+      s.privileged = false
+      s.inline = "source .nvm/nvm.sh && cd DVNA && nohup node dvna.js > dvna.log &"
+    end
+  end
 end

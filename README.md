@@ -13,20 +13,24 @@ Download [Metasploitable 2](http://sourceforge.net/projects/metasploitable/files
 
 Build using [packer](https://packer.io):
 
-    {cd packer/kali; packer build kali-2-amd64.json; cd ../..}
-    {cd packer/metasploitable; packer build metasploitable2.json; cd ../..}
-    {cd packer/debian-lenny; packer build debian-lenny-5.0.10-amd64-netinst.json; cd ../..}
+    $(cd packer/kali; packer build kali-2-amd64.json)
+    $(cd packer/metasploitable; packer build metasploitable2.json)
+    $(cd packer/debian-lenny; packer build debian-lenny-5.0.10-amd64-netinst.json)
+    $(cd packer/damn-vulnerable-node-application; packer build dvna-ubuntu-15.10-amd64.json)
 
-This will produce two files
+This will produce four files
 
 - `kali-2-amd64_virtualbox.box` our tester
-- `metasploitable2-virtualbox.box` our target
+- `metasploitable2-virtualbox.box` a really weak target
+- `debian-lenny-5.0.10-amd64.box` a host target
+- `dvna-ubuntu-15.10-amd64.box` a web target
 
 We then have to import those into [Vagrant](https://www.vagrantup.com). Note that we’re using those names in our `Vagrantfile`:
 
-    {cd packer/kali; vagrant box add --name kali      kali-2-amd64-virtualbox.box; cd ../..}
-    {cd packer/metasploitable; vagrant box add --name metasploitable2 metasploitable2-virtualbox.box; cd ../..}
-    {cd packer/debian-lenny; vagrant box add --name debian-lenny debian-lenny-5.0.10-amd64-virtualbox.box; cd ../..}
+    $(cd packer/kali; vagrant box add --name kali      kali-2-amd64-virtualbox.box)
+    $(cd packer/metasploitable; vagrant box add --name metasploitable2 metasploitable2-virtualbox.box)
+    $(cd packer/debian-lenny; vagrant box add --name debian-lenny debian-lenny-5.0.10-amd64-virtualbox.box)
+    $(cd packer/damn-vulnerable-node-application; vagrant box add --name dvna ubuntu-15.10-amd64.box)
 
 ## Running this lab
 
@@ -53,6 +57,10 @@ This is [Metasploitable 2](http://r-7.co/Metasploitable2) based on [waratek/vagr
 
 Debian 5.0.10 based on [lxhunter/packer-templates](https://github.com/lxhunter/packer-templates/tree/master/templates/debian).
 
+## DVNA `packer/damn-vulnerable-node-application` ##
+
+[DVNA](https://github.com/quantumfoam/DVNA) based on [kaorimatz/packer-templates](https://github.com/kaorimatz/packer-templates/).
+
 ## Contributing
 
-Yes, please! I’m lazy and loads of stuff isn’t as polished as it should be. Also, feel free to open issues
+Yes, please! I’m lazy and loads of stuff isn’t as polished as it should be. Also, feel free to open issues.
